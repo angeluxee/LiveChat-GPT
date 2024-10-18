@@ -39,7 +39,6 @@ app.use(sessions({
 //ioioio
 io.on('connection', async (socket) => {
   console.log(`Un usuario se ha conectado`);
-
   socket.on('message', async (clientMessage) => {
     try {
       const chatMessage = await chatController.create(clientMessage);
@@ -116,8 +115,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use("/api", router.post("/msg/newMessage", [apiController.apiCheck , chatController.sendMessage] , async (req, res, next) => {
-  io.to(req.body.room ).emit('message', { sender: req.body.user, text: req.body.msg, date: req.message.createdAt});
+app.use("/api", router.post("/msg/send", [apiController.apiCheck , chatController.sendMessage] , async (req, res, next) => {
+  console.log(req.message)  
+  io.to(req.message.room).emit('message', { sender: req.message.sender, text: req.message.message, avatar: req.message.avatar, date: req.message.createdAt});
   res.json({"succes": "Mensaje enviado correctamente"});
 }));
 

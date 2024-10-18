@@ -7,6 +7,8 @@ var chatController = require(controllerDir+"chat");
 
 router.post("/add", apiController.addApiKey);
 
+// router.post("/msg/send", apiController.apiCheck, chatController.sendMessage);
+
 router.get("/msg/:room", apiController.apiCheck, chatController.getMessages);
 
 router.get("/msg/:room/:user", apiController.apiCheck, chatController.getMessages);

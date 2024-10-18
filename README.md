@@ -3,7 +3,7 @@
 
 ## Descripción del Proyecto
 
-Este proyecto es una aplicación de chat en tiempo real muy sencilla desarrollada con **Node.js**, **Express**, **Socket.IO**, y **MongoDB**. Permite la interacción entre usuarios y opcionalmente con un modelo de inteligencia artificial (ChatGPT).
+Este proyecto es una aplicación de chat en tiempo real muy sencilla desarrollada con **Node.js**, **Express**, **Socket.IO**, **Docker** y **MongoDB**. Permite la interacción entre usuarios y opcionalmente con un modelo de inteligencia artificial (ChatGPT).
 
 ### Características:
 - **Chat en tiempo real**: Soporte de múltiples salas de chat con mensajes enviados en tiempo real usando WebSockets.
@@ -28,23 +28,6 @@ Este proyecto es una aplicación de chat en tiempo real muy sencilla desarrollad
     ```json
     {
       "apikey": "tu-api-key-aqui"
-    }
-    ```
-
-#### Enviar un nuevo mensaje
-- **ENDPOINT** `POST http://localhost:3000/api/msg/newMessage`
-- **Descripción:** Este endpoint permite a los usuarios enviar un nuevo mensaje a una sala específica, no se comprueba si el user existe o no.
-
-- **Estructura de la Solicitud:**
-
-    ##### Body
-    La solicitud debe incluir un body en formato JSON con los siguientes parámetros:
-
-    ```json
-    {
-      "user": "nombre_del_usuario",
-      "msg": "contenido_del_mensaje",
-      "room": "número_de_sala"
     }
     ```
 
@@ -77,7 +60,27 @@ Este proyecto es una aplicación de chat en tiempo real muy sencilla desarrollad
     - **Value**: la_key_creada (POST /api/add)
 
 - **Formato de respuesta:** `JSON`
-    
+
+#### Enviar un nuevo mensaje
+- **ENDPOINT** `POST http://localhost:3000/api/msg/send`
+- **Descripción:** Este endpoint permite a los usuarios enviar un nuevo mensaje a una sala específica, no se comprueba si el user existe o no.
+
+- **Estructura de la Solicitud:**
+
+    ##### Body
+    La solicitud debe incluir un body en formato JSON con los siguientes parámetros:
+
+    ```json
+    {
+      "user": "nombre_del_usuario",
+      "msg": "contenido_del_mensaje",
+      "room": "número_de_sala"
+    }
+    ```
+    ##### Autorization
+    - **Key**: Key
+    - **Value**: la_key_creada (POST /api/add)
+
 ## Tecnologías Utilizadas
 - **Node.js**
 - **Express.js**

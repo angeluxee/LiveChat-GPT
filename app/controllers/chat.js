@@ -52,13 +52,13 @@ exports.sendMessage = async (req, res, next) => {
                 avatar: 'default_avatar.jpg'
             });
             await req.message.save();
-            // Emitir el mensaje a la sala correspondiente
-            io.to(req.body.room).emit('message', {
-                sender: req.message.sender,
-                text: req.message.message,
-                avatar: req.message.avatar,
-                date: req.message.createdAt
-            });
+            // // Emitir el mensaje a la sala correspondiente
+            // io.to(req.body.room).emit('message', {
+            //     sender: req.message.sender,
+            //     text: req.message.message,
+            //     avatar: req.message.avatar,
+            //     date: req.message.createdAt
+            // });
             res.json({ "success": "Mensaje enviado correctamente" });
         }
     } catch (error) {
