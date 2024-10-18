@@ -109,6 +109,50 @@
             color: #007bff;
             text-align: center;
         }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .checkbox-wrapper label {
+            margin-right: 5px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        #gpt {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            margin: 4px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        #gpt:checked {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        #gpt:checked::after {
+            content: '\2714';
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #gpt:hover {
+            border-color: #0056b3;
+        }
     
     </style>    
 </head>
@@ -147,8 +191,10 @@
             <form id="message-form">
                 <input type="text" id="message" name="message" placeholder="Escribe tu mensaje aquí:"/>
                 <button type="submit">Enviar</button>
-                IA
-                <input type="checkbox" id="gpt"> 
+                <div class="checkbox-wrapper">
+                    <label for="gpt">IA</label>
+                    <input type="checkbox" id="gpt"> 
+                </div>
             </form>
         </div>
 
