@@ -140,7 +140,6 @@
                 <div id="user-list">
                     <h5>Usuarios Conectados</h5>
                     <ul id="listausuarios">
-                        <%= username %>
                     </ul>
                 </div>
             </div>
@@ -159,6 +158,15 @@
     document.addEventListener('DOMContentLoaded', function () {
         const socket = io();
         socket.emit("joinRoom", "<%= sala %>", "<%= username %>");
+        socket.on('users', function (data){
+            const uList = document.getElementById('listausuarios');
+            uList.innerHTML = '';
+            data.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = user;
+                uList.appendChild(li);
+            });
+        });
         socket.on('message', function (data) {
             const messagesContainer = document.getElementById('messages-box');
             const newMessage = document.createElement('div');

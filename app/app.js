@@ -14,6 +14,7 @@ var express = require("express"),
   const apiController = require('./controllers/api'); 
   const router = express.Router();
   
+const activeUsers = {};
 server.listen(port, (err, res) => {
   if (err) console.log(`ERROR: Connecting APP ${err}`);
   else console.log(`Server is running on port ${port}`);
@@ -37,7 +38,7 @@ app.use(sessions({
 
 //ioioio
 io.on('connection', async (socket) => {
-  console.log('Un usuario se ha conectado');
+  console.log(`Un usuario se ha conectado`);
 
   socket.on('message', async (clientMessage) => {
     try {
@@ -64,11 +65,18 @@ io.on('connection', async (socket) => {
     }
   });
   
-
   socket.on('joinRoom', async (room, username) => {
     socket.join(room);
     socket.room = room;
     socket.username = username;
+
+    if (!activeUsers[room]) {
+      activeUsers[room] = [];
+    }
+    if (!activeUsers[room].includes(username)) {
+      activeUsers[room].push(username);
+    }
+    io.to(room).emit('users', activeUsers[room]);
     try {
       const messages = await Chat.find({ room: room }).sort({ timestamp: 1 });
       messages.forEach((message) => {
@@ -85,7 +93,11 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`El usuario ${socket.username} se ha desconectado`);
+    if (activeUsers[socket.room] && activeUsers[socket.room].includes(socket.username)) {
+      activeUsers[socket.room] = activeUsers[socket.room].filter(user => user !== socket.username);
+      io.to(socket.room).emit('users', activeUsers[socket.room]);
+      console.log(`El usuario ${socket.username} se ha desconectado`);
+    }     
   });
 });
 

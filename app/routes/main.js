@@ -22,10 +22,10 @@ router.post('/createuser', userController.create, (req, res, next) => {
     res.redirect("/");
 });
 
-/*Access only if logged in with session */
 router.get("/chat/list", (req, res, next) => {
     if(req.session.auth){
-        res.render("chatlist");
+        const username = req.session.auth.info.name;
+        res.render("chatlist", {username: username});
     }
 });
 router.get("/admin/info", (req, res, next) => {
